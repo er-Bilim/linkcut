@@ -1,7 +1,6 @@
 import type { Router, Request, Response } from 'express';
 import express from 'express';
-import type { ILink, ISourceLink } from '../../types/links/links.types.js';
-import generateRandomString from '../../utils/generateRandomString.js';
+import type { ISourceLink } from '../../types/links/links.types.js';
 import Link from '../../models/Link/Link.js';
 import { Error } from 'mongoose';
 
@@ -11,7 +10,7 @@ linksRouter.get('/:shortUrl', async (req: Request, res: Response) => {
   const shortUrl = req.params.shortUrl as string;
 
   try {
-    const link: ILink | null = await Link.findOne({ shortUrl: shortUrl });
+    const link: ISourceLink | null = await Link.findOne({ shortUrl });
     if (link) {
       res.status(301).redirect(link.originalUrl);
     } else {
@@ -30,9 +29,8 @@ export default linksRouter;
 
 linksRouter.post('/', async (req: Request, res: Response, next) => {
   const data: ISourceLink = req.body;
-  const correctLinkData: ILink = {
+  const correctLinkData: ISourceLink = {
     originalUrl: data.originalUrl,
-    shortUrl: generateRandomString(7),
   };
 
   try {

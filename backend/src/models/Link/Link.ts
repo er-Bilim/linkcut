@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import generateRandomString from '../../utils/generateRandomString.js';
 
 const Schema = mongoose.Schema;
 
@@ -13,6 +14,7 @@ const LinkSchema = new Schema({
     required: true,
     trim: true,
     unique: true,
+    default: () => generateRandomString(7),
   },
 });
 
