@@ -1,6 +1,6 @@
 export interface ILink {
-  shortUrl: string;
   originalUrl: string;
+  shortUrl: string;
 }
 
 export interface ISourceLink {

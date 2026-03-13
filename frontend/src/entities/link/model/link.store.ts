@@ -1,22 +1,26 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { postLink } from '../api/link.service';
-import type { ISourceLink } from '../types/link.types';
+import type { ILink, ISourceLink } from '../types/link.types';
 
 interface LinkState {
+  linkData: ILink | null;
   loading: boolean;
-  postLink: (link: ISourceLink) => Promise<void>;
+  postLink: (data: ISourceLink) => Promise<ILink>;
 }
 
 export const useLinkStore = create<LinkState>()(
   devtools(
     (set) => ({
-      postLink: async (link) => {
+      linkData: null,
+      loading: false,
+      postLink: async (data) => {
         try {
+          const linkData = await postLink(data);
           set({
             loading: true,
+            linkData,
           });
-          await postLink(link);
         } catch (error) {
           console.error(error);
         } finally {
