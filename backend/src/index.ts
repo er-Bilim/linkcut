@@ -12,11 +12,15 @@ app.use(express.json());
 app.use('/api', apiRoute);
 
 const run = async () => {
+  
+  await mongoose.connect('mongodb://localhost/linkcut-bilim');
 
-  await mongoose.connect("mongodb://localhost/linkcut-bilim")
-
-  app.listen(PORT,() => {
+  app.listen(PORT, () => {
     console.log(`http://localhost:${PORT}`);
+  });
+
+  process.on('exit', () => {
+    mongoose.disconnect();
   });
 };
 
