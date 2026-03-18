@@ -9,7 +9,6 @@ const LinkPage = () => {
 
   const handleSendLink = async (data: ISourceLink): Promise<void> => {
     await postLink(data);
-    console.log(linkData);
   };
 
   const renderContent = () => {
